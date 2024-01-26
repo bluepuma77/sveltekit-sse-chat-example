@@ -17,8 +17,6 @@ export function GET({ url }) {
     const e = event(async function run(emit) {
 
         // emit data on connect
-        emit(JSON.stringify(getRoomUsers(room)))
-        emit('test', JSON.stringify(getRoomUsers(room)))
         emit('users', JSON.stringify(getRoomUsers(room)))
 
         // emit data of subscription
