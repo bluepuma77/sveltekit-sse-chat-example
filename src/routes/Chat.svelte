@@ -9,8 +9,18 @@
     // setup SSE with parameters and multiple events
     const params = "?name=" + encodeURIComponent(name) + "&room=" + encodeURIComponent(room);
     const connection = source("/api/chat" + params);
-    const users = connection.select("users").json((res) => res.previousParsedValue);
-    const message = connection.select("message").json((res) => res.previousParsedValue);
+    const users = connection.select("users").json(
+        function onJsonParseError({error, currentRawValue, previousParsedValue}){
+            console.error(`Could not parse "${currentRawValue}" as json.`, error)
+            return previousParsedValue  // this will be the new value of the store
+        }
+    )
+    const message = connection.select("message").json(
+        function onJsonParseError({error, currentRawValue, previousParsedValue}){
+            console.error(`Could not parse "${currentRawValue}" as json.`, error)
+            return previousParsedValue  // this will be the new value of the store
+        }
+    )
 
     // debug
     $: if (users) {
