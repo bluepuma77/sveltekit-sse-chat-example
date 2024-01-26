@@ -22,6 +22,10 @@ Small libraries for in-memory storage (`/lib/server/chats.js`) and pubsub (`lib/
 
 Component `EnterName` returns the entered name to the main page via bind. 
 
+![EnterName screenshot](https://github.com/bluepuma77/sveltekit-sse-chat-example/blob/main/doc/EnterName.png)
+
 Component `SelectRoom` returns the selected or entered room to the main page via bind, it uses the `rooms` SSE to list existing rooms, updating in real time. 
+
+![SelectRoom screenshot](https://github.com/bluepuma77/sveltekit-sse-chat-example/blob/main/doc/SelectRoom.png)
 
 Then component `Chat` will be rendered with parameters `name` and `room`. TBD...

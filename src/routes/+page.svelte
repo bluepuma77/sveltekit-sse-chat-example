@@ -9,18 +9,18 @@
 <!-- header -->
 <h1 style="text-align: center">sveltekit-sse-chat-example</h1>
 
-<!-- DEBUG: show and delete name and room -->
+<!-- DEBUG: show and enable delete of name and room -->
 <div style="text-align: center; color: lightgrey">
     <span style="padding:64px">
         Name: {name}
         {#if name}
-            <span on:click={() => { name = ''}} style="cursor:pointer">&times;</span>
+            <span on:click={() => { name = ''}} style="cursor:pointer">(&times;)</span>
         {/if}    
     </span>
     <span style="padding:64px">
         Room: {room}
         {#if room}
-            <span on:click={() => { room = ''}} style="cursor:pointer">&times;</span>
+            <span on:click={() => { room = ''}} style="cursor:pointer">(&times;)</span>
         {/if}
     </span>
 </div>
