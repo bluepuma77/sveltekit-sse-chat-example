@@ -19,7 +19,15 @@
 		"tslib": "^2.6.2",
 		"typescript": "^5.3.3",
 		"uuid": "^9.0.1",
-		"vite": "^5.0.12"
+		"vite": "^5.0.12",
+		"prettier": "^3.1.1",
+		"prettier-plugin-svelte": "^3.1.2",
+		"eslint": "^8.56.0",
+		"eslint-config-prettier": "^9.1.0",
+		"eslint-plugin-svelte": "^2.35.1",
+		"@types/eslint": "8.56.0",
+		"@typescript-eslint/eslint-plugin": "^6.19.1",
+		"@typescript-eslint/parser": "^6.19.1"
 	},
 	"type": "module"
 }
