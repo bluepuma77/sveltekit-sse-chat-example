@@ -6,7 +6,7 @@ import {
   delRoomUser,
   newMessage,
 } from '$lib/server/chats.js'
-import { publish, subscribe } from '$lib/server/pubsub.js'
+import { subscribe } from '$lib/server/PubSub'
 import type { Unsubscriber } from 'svelte/store'
 
 // SSE function to stream back user list and new messages
@@ -25,9 +25,9 @@ export function GET({ url }) {
     emit('users', JSON.stringify(getRoomUsers(room)))
 
     // emit data of subscription
-    await new Promise(function run(stop) {
+    await new Promise(function run() {
       //@ts-ignore
-      unsubscribeUsers = subscribe('users-' + room, data => {
+      unsubscribeUsers = subscribe('users-' + room, () => {
         emit('users', JSON.stringify(getRoomUsers(room)))
       })
       //@ts-ignore

@@ -1,6 +1,6 @@
 import { event } from 'sveltekit-sse'
-import { getRooms } from '$lib/server/chats.js'
-import { subscribe } from '$lib/server/pubsub.js'
+import { getRooms } from '$lib/server/chats'
+import { subscribe } from '$lib/server/PubSub'
 import type { Unsubscriber } from 'svelte/store'
 
 export function GET() {

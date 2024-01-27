@@ -9,7 +9,12 @@
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
-    "moduleResolution": "bundler",
+    "isolatedModules": true,
+    "lib": ["esnext", "DOM", "DOM.Iterable"],
+    "moduleResolution": "node",
+    "module": "esnext",
+    "target": "esnext",
+    "ignoreDeprecations": "5.0",
   },
   // Path aliases are handled by https://kit.svelte.dev/docs/configuration#alias
   //
