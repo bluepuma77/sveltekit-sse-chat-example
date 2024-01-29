@@ -28,4 +28,6 @@ Component `SelectRoom` returns the selected or entered room to the main page via
 
 ![SelectRoom screenshot](https://github.com/bluepuma77/sveltekit-sse-chat-example/blob/main/doc/SelectRoom.png)
 
-Then component `Chat` will be rendered with parameters `name` and `room`. TBD...
+Then component `Chat` will be rendered with parameters `name` and `room`. It uses `chat` SSE with query parameter `name` and `room`. This provides multiple events, namely `users` with the full list of user names of the current room and `message` which contains the newly POSTed messages.
+
+![Chat screenshot](https://github.com/bluepuma77/sveltekit-sse-chat-example/blob/main/doc/ChatWindow.png)
