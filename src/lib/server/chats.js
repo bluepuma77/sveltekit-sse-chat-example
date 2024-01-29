@@ -17,7 +17,7 @@ export function getRooms() {
  * @param {string} room - The identifier of the room to be added
  */
 export function addRoom(room) {
-    console.log('add room', room)
+    console.log('addRoom()', room)
     if (!chats[room]) {
         chats[room] = {}
         publish('rooms', room)

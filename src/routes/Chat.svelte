@@ -5,6 +5,7 @@
   export let room = ''
 
   type Message = {
+    room: string
     name: string
     text: string
   }
@@ -20,36 +21,17 @@
   const params =
     '?name=' + encodeURIComponent(name) + '&room=' + encodeURIComponent(room)
   const connection = source('/api/chat' + params)
-  const users = connection
-    .select('users')
-    .json<Array<User>>(function onJsonParseError({
-      error,
-      currentRawValue,
-      previousParsedValue,
-    }) {
-      console.error(`Could not parse "${currentRawValue}" as json.`, error)
-      return previousParsedValue // this will be the new value of the store
-    })
-  const message = connection
-    .select('message')
-    .json<Message>(function onJsonParseError({
-      error,
-      currentRawValue,
-      previousParsedValue,
-    }) {
-      console.error(`Could not parse "${currentRawValue}" as json.`, error)
-      return previousParsedValue // this will be the new value of the store
-    })
-
-  // debug
-  $: if (users) {
-    console.log('users', $users)
-  }
+  const users = connection.select('users').json<Array<User>>(
+    function fallback(result) { return result.previousParsedValue }
+  )
+  const message = connection.select('message').json<Array<Message>>(
+    function fallback(result) { return result.previousParsedValue }
+  )
 
   // add new message to messages
   $: if ($message) {
-    console.log('message', $message)
-    messages.push($message)
+    console.log('received message', $message)
+    messages = [...messages, $message]
   }
 
   async function sendMessage() {
@@ -67,27 +49,60 @@
   }
 </script>
 
-<h1>Chat</h1>
-<p>Name: {name}</p>
-<p>Room: {room}</p>
 
-<div style="width:100%">
-  <div style="width:20%; display: inline-block; background-color: #f7f7f7">
-    <p>Users: {$users}</p>
-    {#each $users || [] as name}
-      <p>{name}</p>
+<div class="users">
+  <h3>Users</h3>
+  {#each $users || [] as name}
+    {name}<br />
+  {/each}
+</div>
+
+<div class="chat">
+  <div class="messages">
+    <h3>Chat</h3>
+    {#each messages as messageLocal}
+      <div style="display: inline-block; min-width: 100px">{messageLocal?.name}:</div> {messageLocal?.text}<br />
     {/each}
   </div>
-  <div style="display: inline-block">
-    {#if $message}
-      <p>Latest message: {$message.name}: {$message.text}</p>
-    {/if}
-
-    {#each messages as messageLocal}
-      {messageLocal?.name}: {messageLocal?.text}
-    {/each}
+  <div class="input-container">
+    <input class="input-field" type="text" bind:value={text} />
+    <button class="submit-button" on:click={sendMessage} disabled={!text}>Send</button>
   </div>
 </div>
 
-<input type="text" bind:value={text} />
-<button on:click={sendMessage} disabled={!text}>Send</button>
+
+<style>
+  .users {
+    width: 20%;
+    overflow-y: auto;
+    background-color: #f4f4f4;
+    padding: 10px;
+    box-sizing: border-box;
+  }
+
+  .chat {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: #e9e9e9;
+  }
+
+  .messages {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding: 10px;
+  }
+
+  .input-container {
+    display: flex;
+    width: 100%;
+  }
+
+  .input-field {
+    flex-grow: 1;
+  }
+
+  .submit-button {
+    flex-shrink: 0;
+  }
+</style>
